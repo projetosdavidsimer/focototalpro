@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-export default function Home() {
+export default function Page() {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -31,12 +31,12 @@ export default function Home() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
-                    Dashboard Principal
+                    Building Your Application
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Visão Geral</BreadcrumbPage>
+                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
