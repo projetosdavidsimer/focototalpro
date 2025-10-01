@@ -2,16 +2,15 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
+  LayoutDashboard,
   BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
+  Calendar,
+  ClipboardList,
+  BarChart3,
+  Settings,
+  Crown,
+  Target,
+  Clock,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -26,132 +25,128 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-// This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Usuário",
+    email: "usuario@focototal.com",
+    avatar: "/avatars/user.jpg",
   },
   teams: [
     {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
+      name: "FocoTotal",
+      logo: BookOpen,
+      plan: "Premium",
     },
   ],
   navMain: [
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: LayoutDashboard,
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Visão Geral",
+          url: "/dashboard",
         },
         {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
+          title: "Estatísticas",
+          url: "/dashboard/stats",
         },
       ],
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
+      title: "Planejamento",
+      url: "/planner",
+      icon: Calendar,
       items: [
         {
-          title: "Genesis",
-          url: "#",
+          title: "Ciclo de Estudos",
+          url: "/planner",
         },
         {
-          title: "Explorer",
-          url: "#",
+          title: "Minhas Matérias",
+          url: "/planner/subjects",
         },
         {
-          title: "Quantum",
-          url: "#",
+          title: "Cronômetro",
+          url: "/planner/timer",
         },
       ],
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
+      title: "Simulados",
+      url: "/simulados",
+      icon: ClipboardList,
       items: [
         {
-          title: "Introduction",
-          url: "#",
+          title: "Registrar Simulado",
+          url: "/simulados/new",
         },
         {
-          title: "Get Started",
-          url: "#",
+          title: "Histórico",
+          url: "/simulados/history",
         },
         {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
+          title: "Análise",
+          url: "/simulados/analysis",
         },
       ],
     },
     {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
+      title: "Desempenho",
+      url: "/performance",
+      icon: BarChart3,
       items: [
         {
-          title: "General",
-          url: "#",
+          title: "Evolução Geral",
+          url: "/performance",
         },
         {
-          title: "Team",
-          url: "#",
+          title: "Por Matéria",
+          url: "/performance/subjects",
         },
         {
-          title: "Billing",
-          url: "#",
+          title: "Pontos Fracos",
+          url: "/performance/weaknesses",
+        },
+      ],
+    },
+    {
+      title: "Configurações",
+      url: "/settings",
+      icon: Settings,
+      items: [
+        {
+          title: "Perfil",
+          url: "/settings/profile",
         },
         {
-          title: "Limits",
-          url: "#",
+          title: "Assinatura",
+          url: "/settings/subscription",
+        },
+        {
+          title: "Preferências",
+          url: "/settings/preferences",
         },
       ],
     },
   ],
   projects: [
     {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
+      name: "Metas do Mês",
+      url: "/goals",
+      icon: Target,
     },
     {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
+      name: "Sessões de Estudo",
+      url: "/sessions",
+      icon: Clock,
     },
     {
-      name: "Travel",
-      url: "#",
-      icon: Map,
+      name: "Plano Premium",
+      url: "/pricing",
+      icon: Crown,
     },
   ],
 }
