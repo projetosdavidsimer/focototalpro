@@ -148,3 +148,45 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  @keyframes loading-bar {
+    0% {
+      width: 0%;
+    }
+    50% {
+      width: 70%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+  
+  .animate-loading-bar {
+    animation: loading-bar 0.3s ease-in-out;
+  }
+  
+  /* Transições suaves para navegação */
+  .page-transition {
+    animation: fadeIn 0.15s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Prevenir flash de conteúdo */
+  html {
+    background-color: var(--background);
+  }
+  
+  /* Scroll suave */
+  html {
+    scroll-behavior: smooth;
+  }
+}
