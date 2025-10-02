@@ -1,8 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { revalidatePath, revalidateTag } from 'next/cache'
-import { unstable_cache } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 export type StudySessionInput = {
   subject_id?: string | null
@@ -102,8 +101,6 @@ export async function createStudySession(userId: string, session: StudySessionIn
 
   revalidatePath('/planner/sessions')
   revalidatePath('/dashboard')
-  revalidateTag('dashboard-stats')
-  revalidateTag('recent-activity')
 
   return { data }
 }
@@ -143,8 +140,6 @@ export async function updateStudySession(sessionId: string, updates: StudySessio
 
   revalidatePath('/planner/sessions')
   revalidatePath('/dashboard')
-  revalidateTag('dashboard-stats')
-  revalidateTag('recent-activity')
 
   return { data }
 }
@@ -164,8 +159,6 @@ export async function deleteStudySession(sessionId: string) {
 
   revalidatePath('/planner/sessions')
   revalidatePath('/dashboard')
-  revalidateTag('dashboard-stats')
-  revalidateTag('recent-activity')
 
   return { success: true }
 }
