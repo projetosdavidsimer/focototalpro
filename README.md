@@ -131,7 +131,7 @@ Consulte [SECURITY.md](./SECURITY.md) para o checklist completo.
 **Versão**: 1.0.0 (MVP Completo)  
 **Progresso**: 95% concluído  
 **Build Status**: ✅ Compilando sem erros  
-**Repositório**: https://github.com/projetosdavidsimer/my-app  
+**Repositório**: https://github.com/projetosdavidsimer/focototalpro  
 **Próxima milestone**: Deploy em produção
 
 ### ✅ Completo
