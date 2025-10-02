@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { Plus, FileText } from "lucide-react"
-import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,11 +10,7 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ExamCard } from "@/components/mock-exams/exam-card"
 import { ExamDialog } from "@/components/mock-exams/exam-dialog"
@@ -101,12 +96,6 @@ export default function SimuladosPage() {
     return null
   }
 
-  const userData = {
-    name: user.full_name,
-    email: user.email,
-    avatar: user.avatar_url,
-  }
-
   // Calcular estatísticas
   const totalExams = exams.length
   const averageScore = totalExams > 0
@@ -118,9 +107,7 @@ export default function SimuladosPage() {
     : 0
 
   return (
-    <SidebarProvider>
-      <AppSidebar user={userData} />
-      <SidebarInset>
+    <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -229,7 +216,6 @@ export default function SimuladosPage() {
             </div>
           )}
         </div>
-      </SidebarInset>
 
       <ExamDialog
         open={dialogOpen}
@@ -238,6 +224,6 @@ export default function SimuladosPage() {
         exam={editingExam}
         onSuccess={handleSuccess}
       />
-    </SidebarProvider>
+    </SidebarInset>
   )
 }
