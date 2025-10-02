@@ -1,8 +1,18 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { withCache, CACHE_TIMES, CACHE_TAGS } from '@/lib/cache'
 
 export async function getDashboardStats(userId: string) {
+  return withCache(
+    ['dashboard-stats', userId],
+    async () => getDashboardStatsUncached(userId),
+    CACHE_TIMES.DASHBOARD_STATS,
+    [CACHE_TAGS.dashboard(userId)]
+  )
+}
+
+async function getDashboardStatsUncached(userId: string) {
   const supabase = await createClient()
 
   // Buscar horas estudadas na semana
@@ -77,6 +87,15 @@ export async function getDashboardStats(userId: string) {
 }
 
 export async function getRecentActivity(userId: string) {
+  return withCache(
+    ['recent-activity', userId],
+    async () => getRecentActivityUncached(userId),
+    CACHE_TIMES.SESSIONS,
+    [CACHE_TAGS.sessions(userId), CACHE_TAGS.exams(userId)]
+  )
+}
+
+async function getRecentActivityUncached(userId: string) {
   const supabase = await createClient()
 
   // Buscar últimas 5 sessões de estudo
@@ -108,6 +127,15 @@ export async function getRecentActivity(userId: string) {
 }
 
 export async function getUpcomingTopics(userId: string) {
+  return withCache(
+    ['upcoming-topics', userId],
+    async () => getUpcomingTopicsUncached(userId),
+    CACHE_TIMES.SUBJECTS,
+    [CACHE_TAGS.subjects(userId)]
+  )
+}
+
+async function getUpcomingTopicsUncached(userId: string) {
   const supabase = await createClient()
 
   // Buscar matérias com menos horas estudadas recentemente
