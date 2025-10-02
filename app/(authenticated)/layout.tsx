@@ -1,5 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar"
+import { SidebarProvider } from "@/components/ui/sidebar"
 import { getCurrentUser } from "@/app/actions/auth"
 import { redirect } from "next/navigation"
 

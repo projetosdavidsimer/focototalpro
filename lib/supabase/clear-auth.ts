@@ -40,5 +40,6 @@ export function clearAuthData() {
 
 // Export for use in browser console during debugging
 if (typeof window !== 'undefined') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   (window as any).clearAuthData = clearAuthData
 }
