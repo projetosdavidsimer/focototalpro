@@ -7,7 +7,6 @@ import {
   Calendar,
   ClipboardList,
   BarChart3,
-  Crown,
   Target,
   Clock,
 } from "lucide-react"
@@ -134,11 +133,6 @@ const defaultData = {
       name: "Sessões de Estudo",
       url: "/sessions",
       icon: Clock,
-    },
-    {
-      name: "Plano Premium",
-      url: "/pricing",
-      icon: Crown,
     },
   ],
 }
