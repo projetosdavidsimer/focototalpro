@@ -1,31 +1,14 @@
-import { getCurrentUser } from "@/app/actions/auth"
-import { redirect } from "next/navigation"
-import { PageLayout } from "@/components/page-layout"
 import { Clock, Calendar, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { PageHeader } from "@/components/page-header"
 import Link from "next/link"
 
 export default async function SessionsPage() {
-  const user = await getCurrentUser()
-  
-  if (!user) {
-    redirect('/login')
-  }
-
-  const userData = {
-    name: user.full_name,
-    email: user.email,
-    avatar: user.avatar_url,
-  }
-
   return (
-    <PageLayout
-      user={userData}
-      breadcrumbs={[
-        { label: "Sessões de Estudo" },
-      ]}
-    >
-      <div className="rounded-xl border bg-card p-6">
+    <>
+      <PageHeader breadcrumbs={[{ label: "Sessões de Estudo" }]} />
+      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+        <div className="rounded-xl border bg-card p-6">
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-2xl font-bold">Sessões de Estudo</h2>
@@ -88,7 +71,8 @@ export default async function SessionsPage() {
             </p>
           </div>
         </div>
+        </div>
       </div>
-    </PageLayout>
+    </>
   )
 }
