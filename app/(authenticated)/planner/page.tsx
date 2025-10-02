@@ -1,4 +1,3 @@
-import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,33 +8,14 @@ import {
 } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { getCurrentUser } from "@/app/actions/auth"
-import { redirect } from "next/navigation"
 import Link from "next/link"
 import { BookOpen, Timer, Files } from "lucide-react"
 
-export default async function Page() {
-  const user = await getCurrentUser()
-  if (!user) {
-    redirect("/login")
-  }
-
-  const userData = {
-    name: user.full_name,
-    email: user.email,
-    avatar: user.avatar_url,
-  }
-
+export default async function PlannerPage() {
   return (
-    <SidebarProvider>
-      <AppSidebar user={userData} />
-      <SidebarInset>
+    <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -126,7 +106,6 @@ export default async function Page() {
             </div>
           </div>
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+    </SidebarInset>
   )
 }
