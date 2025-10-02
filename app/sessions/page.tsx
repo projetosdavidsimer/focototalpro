@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { PageLayout } from "@/components/page-layout"
 import { Clock, Calendar, TrendingUp } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default async function SessionsPage() {
   const user = await getCurrentUser()
@@ -73,9 +74,9 @@ export default async function SessionsPage() {
               </p>
             </div>
             <Button asChild>
-              <a href="/planner/sessions">
+              <Link href="/planner/sessions">
                 Ir para Sessões
-              </a>
+              </Link>
             </Button>
           </div>
 
@@ -83,7 +84,7 @@ export default async function SessionsPage() {
             <Clock className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p className="text-lg font-medium mb-2">Nenhuma sessão registrada</p>
             <p className="text-sm">
-              Use o <a href="/planner/pomodoro" className="text-primary hover:underline">Timer Pomodoro</a> ou registre manualmente suas sessões de estudo.
+              Use o <Link href="/planner/pomodoro" className="text-primary hover:underline">Timer Pomodoro</Link> ou registre manualmente suas sessões de estudo.
             </p>
           </div>
         </div>
