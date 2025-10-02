@@ -37,9 +37,6 @@ const nextConfig: NextConfig = {
   // Compressão para assets menores
   compress: true,
   
-  // Otimizar fontes
-  optimizeFonts: true,
-  
   // Headers para cache agressivo
   async headers() {
     return [
