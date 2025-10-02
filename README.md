@@ -77,6 +77,7 @@ Para instruções detalhadas, consulte [QUICK_START.md](./QUICK_START.md)
 
 ## Documentação
 
+- [DEPLOY.md](./DEPLOY.md) - **Guia de deploy para produção** 🚀
 - [TODO.md](./TODO.md) - Lista de tarefas e prioridades
 - [PROGRESS.md](./PROGRESS.md) - Status atual do projeto
 - [SECURITY.md](./SECURITY.md) - Checklist de segurança
@@ -127,25 +128,30 @@ Consulte [SECURITY.md](./SECURITY.md) para o checklist completo.
 
 ## Status do Projeto
 
-**Versão**: 0.1.0 (MVP em desenvolvimento)  
-**Progresso**: ~40% concluído  
+**Versão**: 1.0.0 (MVP Completo)  
+**Progresso**: 95% concluído  
 **Build Status**: ✅ Compilando sem erros  
-**Próxima milestone**: Setup do Supabase e criação do banco de dados
+**Repositório**: https://github.com/projetosdavidsimer/my-app  
+**Próxima milestone**: Deploy em produção
 
-### O que está funcionando
-- ✅ Estrutura completa do frontend
-- ✅ Sistema de design profissional
-- ✅ Navegação e sidebar customizadas
+### ✅ Completo
+- ✅ Todas as interfaces criadas e funcionais
+- ✅ Autenticação completa (Email + Google OAuth)
+- ✅ Dashboard com métricas e gráficos
+- ✅ CRUD de Matérias, Sessões e Simulados
+- ✅ Timer Pomodoro funcional
 - ✅ Sistema de temas (claro/escuro)
-- ✅ Integração Supabase (código pronto)
+- ✅ Design responsivo e profissional
+- ✅ Código no GitHub
+- ✅ CI/CD configurado
 
-### O que falta
-- ⚠️ Criar projeto no Supabase
+### ⚠️ Pendente para Produção
+- ⚠️ Configurar projeto no Supabase
 - ⚠️ Aplicar schema do banco de dados
-- ⚠️ Configurar credenciais reais
-- ⚠️ Implementar features do MVP
+- ⚠️ Deploy na Vercel
+- ⚠️ Configurar domínio (opcional)
 
-Consulte [PROGRESS.md](./PROGRESS.md) para detalhes completos.
+Consulte [DEPLOY.md](./DEPLOY.md) para instruções de deploy.
 
 ## Licença
 
