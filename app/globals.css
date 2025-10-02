@@ -146,6 +146,17 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Otimizar renderização */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Otimizar elementos com transform */
+  [class*="transition"],
+  [class*="animate"] {
+    backface-visibility: hidden;
+    transform: translateZ(0);
   }
 }
 
@@ -166,17 +177,20 @@
     animation: loading-bar 0.3s ease-in-out;
   }
   
-  /* Transições suaves para navegação */
+  /* Transições suaves para navegação com hardware acceleration */
   .page-transition {
-    animation: fadeIn 0.15s ease-in-out;
+    animation: fadeIn 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
   }
   
   @keyframes fadeIn {
     from {
       opacity: 0;
+      transform: translate3d(0, 8px, 0);
     }
     to {
       opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
   
@@ -188,5 +202,38 @@
   /* Scroll suave */
   html {
     scroll-behavior: smooth;
+  }
+  
+  /* View Transitions API Support */
+  @supports (view-transition-name: none) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.2s;
+    }
+  }
+  
+  /* Suavizar transições de tema */
+  * {
+    transition: background-color 0.2s ease-in-out, 
+                border-color 0.2s ease-in-out,
+                color 0.2s ease-in-out;
+  }
+  
+  /* Exceções para elementos que não devem ter transição */
+  .no-transition,
+  .no-transition * {
+    transition: none !important;
+  }
+  
+  /* Otimizar performance de animações */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

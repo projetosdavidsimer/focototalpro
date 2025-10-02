@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Plus, FileText } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -40,16 +40,16 @@ export default function SimuladosPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingExam, setEditingExam] = useState<MockExam | undefined>()
 
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
       router.push('/login')
       return
     }
     setUser(currentUser)
-  }
+  }, [router])
 
-  const loadExams = async (userId: string) => {
+  const loadExams = useCallback(async (userId: string) => {
     setLoading(true)
     const result = await getMockExams(userId)
     
@@ -57,17 +57,17 @@ export default function SimuladosPage() {
       setExams(result.data)
     }
     setLoading(false)
-  }
+  }, [])
 
   useEffect(() => {
     loadUser()
-  }, [])
+  }, [loadUser])
 
   useEffect(() => {
     if (user) {
       loadExams(user.id)
     }
-  }, [user])
+  }, [user, loadExams])
 
   const handleEdit = (exam: MockExam) => {
     setEditingExam(exam)

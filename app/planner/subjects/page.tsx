@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Plus, BookOpen } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
@@ -40,16 +40,16 @@ export default function SubjectsPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingSubject, setEditingSubject] = useState<Subject | undefined>()
 
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
       router.push('/login')
       return
     }
     setUser(currentUser)
-  }
+  }, [router])
 
-  const loadSubjects = async (userId: string) => {
+  const loadSubjects = useCallback(async (userId: string) => {
     setLoading(true)
     const result = await getSubjects(userId)
     
@@ -57,17 +57,17 @@ export default function SubjectsPage() {
       setSubjects(result.data)
     }
     setLoading(false)
-  }
+  }, [])
 
   useEffect(() => {
     loadUser()
-  }, [])
+  }, [loadUser])
 
   useEffect(() => {
     if (user) {
       loadSubjects(user.id)
     }
-  }, [user])
+  }, [user, loadSubjects])
 
   const handleEdit = (subject: Subject) => {
     setEditingSubject(subject)

@@ -39,7 +39,6 @@ export default function RegisterPage() {
       // O perfil é criado automaticamente pelo trigger handle_new_user
       // Não precisamos criar manualmente
       router.push("/dashboard")
-      router.refresh()
     }
   }
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState, useCallback } from "react"
 import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
@@ -45,7 +45,6 @@ import {
 } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { format } from "date-fns"
-import { ptBR } from "date-fns/locale"
 
 interface Subject {
   id: string
@@ -96,43 +95,43 @@ export default function StudySessionsPage() {
 
   const [datePickerOpen, setDatePickerOpen] = useState(false)
 
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     const currentUser = await getCurrentUser()
     if (!currentUser) {
       router.push("/login")
       return
     }
     setUser(currentUser)
-  }
+  }, [router])
 
-  const loadSubjects = async (userId: string) => {
+  const loadSubjects = useCallback(async (userId: string) => {
     const result = await getSubjects(userId)
     if (result.data) {
       setSubjects(
         result.data.map((s) => ({ id: s.id, name: s.name, color: s.color }))
       )
     }
-  }
+  }, [])
 
-  const loadSessions = async (userId: string) => {
+  const loadSessions = useCallback(async (userId: string) => {
     setLoadingList(true)
     const result = await getStudySessions(userId, { limit: 20 })
     if (result.data) {
       setSessions(result.data)
     }
     setLoadingList(false)
-  }
+  }, [])
 
-  const loadWeekly = async (userId: string) => {
+  const loadWeekly = useCallback(async (userId: string) => {
     const result = await getWeeklyStudySummary(userId)
     if (result.data) {
       setWeekly(result.data)
     }
-  }
+  }, [])
 
   useEffect(() => {
     loadUser()
-  }, [])
+  }, [loadUser])
 
   useEffect(() => {
     if (user) {
@@ -140,7 +139,7 @@ export default function StudySessionsPage() {
       loadSessions(user.id)
       loadWeekly(user.id)
     }
-  }, [user])
+  }, [user, loadSubjects, loadSessions, loadWeekly])
 
   const onCreate = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -91,72 +91,7 @@ export default function PomodoroPage() {
     }
   }, [user, loadSubjects])
 
-  // Timer logic
-  useEffect(() => {
-    let interval: NodeJS.Timeout | null = null
-
-    if (isRunning && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1)
-      }, 1000)
-    } else if (timeLeft === 0) {
-      handleTimerComplete()
-    }
-
-    return () => {
-      if (interval) clearInterval(interval)
-    }
-  }, [isRunning, timeLeft])
-
-  // Persistir estado e configurações no localStorage
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("pomodoro-state")
-      if (saved) {
-        try {
-          const state = JSON.parse(saved)
-          setMode(state.mode || "focus")
-          setTimeLeft(state.timeLeft || focusMinutes * 60)
-          setCompletedCycles(state.completedCycles || 0)
-          setSelectedSubject(state.selectedSubject || null)
-        } catch {
-          // Ignorar erro de parse
-        }
-      }
-
-      const savedSettings = localStorage.getItem("pomodoro-settings")
-      if (savedSettings) {
-        try {
-          const settings = JSON.parse(savedSettings)
-          setFocusMinutes(settings.focusMinutes || 25)
-          setShortBreakMinutes(settings.shortBreakMinutes || 5)
-          setLongBreakMinutes(settings.longBreakMinutes || 15)
-        } catch {
-          // Ignorar erro de parse
-        }
-      }
-    }
-  }, [])
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        "pomodoro-state",
-        JSON.stringify({ mode, timeLeft, completedCycles, selectedSubject })
-      )
-    }
-  }, [mode, timeLeft, completedCycles, selectedSubject])
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(
-        "pomodoro-settings",
-        JSON.stringify({ focusMinutes, shortBreakMinutes, longBreakMinutes })
-      )
-    }
-  }, [focusMinutes, shortBreakMinutes, longBreakMinutes])
-
-  const handleTimerComplete = async () => {
+  const handleTimerComplete = useCallback(async () => {
     setIsRunning(false)
 
     if (mode === "focus") {
@@ -195,7 +130,72 @@ export default function PomodoroPage() {
         })
       }
     }
-  }
+  }, [mode, user, selectedSubject, focusMinutes, completedCycles, longBreakMinutes, shortBreakMinutes])
+
+  // Timer logic
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null
+
+    if (isRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => prev - 1)
+      }, 1000)
+    } else if (timeLeft === 0) {
+      handleTimerComplete()
+    }
+
+    return () => {
+      if (interval) clearInterval(interval)
+    }
+  }, [isRunning, timeLeft, handleTimerComplete])
+
+  // Persistir estado e configurações no localStorage
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("pomodoro-state")
+      if (saved) {
+        try {
+          const state = JSON.parse(saved)
+          setMode(state.mode || "focus")
+          setTimeLeft(state.timeLeft || 25 * 60)
+          setCompletedCycles(state.completedCycles || 0)
+          setSelectedSubject(state.selectedSubject || null)
+        } catch {
+          // Ignorar erro de parse
+        }
+      }
+
+      const savedSettings = localStorage.getItem("pomodoro-settings")
+      if (savedSettings) {
+        try {
+          const settings = JSON.parse(savedSettings)
+          setFocusMinutes(settings.focusMinutes || 25)
+          setShortBreakMinutes(settings.shortBreakMinutes || 5)
+          setLongBreakMinutes(settings.longBreakMinutes || 15)
+        } catch {
+          // Ignorar erro de parse
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "pomodoro-state",
+        JSON.stringify({ mode, timeLeft, completedCycles, selectedSubject })
+      )
+    }
+  }, [mode, timeLeft, completedCycles, selectedSubject])
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(
+        "pomodoro-settings",
+        JSON.stringify({ focusMinutes, shortBreakMinutes, longBreakMinutes })
+      )
+    }
+  }, [focusMinutes, shortBreakMinutes, longBreakMinutes])
 
   const handlePlayPause = () => {
     if (!isRunning && "Notification" in window && Notification.permission === "default") {

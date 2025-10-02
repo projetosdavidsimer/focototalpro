@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LoadingBar } from "@/components/loading-bar";
+import { ViewTransitions } from "@/components/view-transitions";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Suspense fallback={null}>
             <LoadingBar />
+            <ViewTransitions />
           </Suspense>
           <div className="page-transition">
             {children}

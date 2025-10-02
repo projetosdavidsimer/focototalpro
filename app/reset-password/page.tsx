@@ -43,7 +43,6 @@ function ResetPasswordForm() {
         setSuccess("Senha redefinida com sucesso. Você será redirecionado para o login.")
         setTimeout(() => {
           router.push("/login")
-          router.refresh()
         }, 1500)
       }
     } catch {

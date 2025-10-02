@@ -8,6 +8,7 @@ import {
   Sparkles,
   User,
 } from "lucide-react"
+import Link from "next/link"
 
 import {
   Avatar,
@@ -104,24 +105,32 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push('/pricing')}>
-                <Sparkles />
-                Plano Premium
+              <DropdownMenuItem asChild>
+                <Link href="/pricing">
+                  <Sparkles />
+                  Plano Premium
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem onClick={() => router.push('/settings/profile')}>
-                <User />
-                Perfil
+              <DropdownMenuItem asChild>
+                <Link href="/settings/profile">
+                  <User />
+                  Perfil
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push('/settings/subscription')}>
-                <CreditCard />
-                Assinatura
+              <DropdownMenuItem asChild>
+                <Link href="/settings/subscription">
+                  <CreditCard />
+                  Assinatura
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => router.push('/settings/preferences')}>
-                <Bell />
-                Preferências
+              <DropdownMenuItem asChild>
+                <Link href="/settings/preferences">
+                  <Bell />
+                  Preferências
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

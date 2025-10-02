@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
+import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
@@ -38,10 +39,36 @@ function BreadcrumbLink({
 }: React.ComponentProps<"a"> & {
   asChild?: boolean
 }) {
-  const Comp = asChild ? Slot : "a"
+  // Se asChild, delega ao Slot; caso contrário, usa Next Link quando href estiver presente
+  if (asChild) {
+    const Comp = Slot
+    return (
+      <Comp
+        data-slot="breadcrumb-link"
+        className={cn("hover:text-foreground transition-colors", className)}
+        {...props}
+      />
+    )
+  }
 
+  const href = props.href as string | undefined
+  const isInternal = href && (href.startsWith("/") || href.startsWith("#"))
+
+  if (isInternal && href) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { href: _, ...restProps } = props
+    return (
+      <Link
+        href={href}
+        className={cn("hover:text-foreground transition-colors", className)}
+        {...restProps}
+      />
+    )
+  }
+
+  // Fallback para âncora nativa (links externos, mailto, etc.)
   return (
-    <Comp
+    <a
       data-slot="breadcrumb-link"
       className={cn("hover:text-foreground transition-colors", className)}
       {...props}

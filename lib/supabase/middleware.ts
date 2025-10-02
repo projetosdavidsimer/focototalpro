@@ -2,6 +2,21 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+
+  // Rotas públicas que não precisam de verificação
+  const publicRoutes = ['/', '/login', '/register', '/forgot-password', '/reset-password', '/pricing']
+  const isPublicRoute = publicRoutes.includes(pathname)
+
+  // Rotas protegidas
+  const protectedRoutes = ['/dashboard', '/planner', '/simulados', '/settings', '/performance', '/goals', '/sessions']
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
+
+  // Se não é rota protegida nem rota de auth, apenas continua
+  if (!isProtectedRoute && !isPublicRoute) {
+    return NextResponse.next()
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -34,28 +49,25 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Refresh session if expired
+  // Verificar usuário apenas se necessário
   const {
     data: { user },
   } = await supabase.auth.getUser()
-
-  // Protected routes
-  const protectedRoutes = ['/dashboard', '/planner', '/simulados', '/settings']
-  const isProtectedRoute = protectedRoutes.some(route => 
-    request.nextUrl.pathname.startsWith(route)
-  )
 
   // Redirect to login if accessing protected route without auth
   if (isProtectedRoute && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
+    url.searchParams.set('redirect', pathname)
     return NextResponse.redirect(url)
   }
 
   // Redirect to dashboard if accessing auth pages while logged in
-  if ((request.nextUrl.pathname === '/login' || request.nextUrl.pathname === '/register') && user) {
+  if ((pathname === '/login' || pathname === '/register') && user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    const redirect = request.nextUrl.searchParams.get('redirect')
+    url.pathname = redirect || '/dashboard'
+    url.searchParams.delete('redirect')
     return NextResponse.redirect(url)
   }
 
