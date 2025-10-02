@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NavigationProgress } from "@/components/navigation-progress";
 import { RoutePreloader } from "@/components/route-preloader";
+import { AuthErrorHandler } from "@/components/auth-error-handler";
 import { Suspense } from "react";
 
 const geistSans = Geist({
@@ -36,7 +37,9 @@ export default function RootLayout({
         </Suspense>
         <RoutePreloader />
         <ThemeProvider>
-          {children}
+          <AuthErrorHandler>
+            {children}
+          </AuthErrorHandler>
         </ThemeProvider>
       </body>
     </html>

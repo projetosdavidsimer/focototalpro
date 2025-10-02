@@ -37,17 +37,38 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Verificar usuário
+  // Verificar usuário e tratar erros de refresh token
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser()
 
-  // Se não está autenticado em rota protegida, redireciona para login
-  if (!user) {
+  // Se há erro de refresh token ou usuário não autenticado, redireciona para login
+  if (error || !user) {
+    // Limpar cookies de autenticação inválidos
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('redirect', pathname)
-    return NextResponse.redirect(url)
+    
+    const response = NextResponse.redirect(url)
+    
+    // Remover cookies de autenticação do Supabase
+    const cookiesToRemove = [
+      'sb-access-token',
+      'sb-refresh-token',
+    ]
+    
+    cookiesToRemove.forEach(cookieName => {
+      response.cookies.delete(cookieName)
+      // Também tentar com o formato completo do Supabase
+      request.cookies.getAll().forEach(cookie => {
+        if (cookie.name.includes('sb-') && cookie.name.includes('-auth-token')) {
+          response.cookies.delete(cookie.name)
+        }
+      })
+    })
+    
+    return response
   }
 
   return supabaseResponse

@@ -20,10 +20,28 @@ function LoginForm() {
   // Redirecionamento no lado do cliente se já estiver autenticado
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        const redirect = searchParams.get('redirect') || '/dashboard'
-        router.push(redirect)
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession()
+        
+        // Se houver erro de refresh token, limpar sessão
+        if (error) {
+          console.error('Session error:', error)
+          // Limpar localStorage
+          const keys = Object.keys(localStorage)
+          keys.forEach(key => {
+            if (key.startsWith('sb-')) {
+              localStorage.removeItem(key)
+            }
+          })
+          return
+        }
+        
+        if (session?.user) {
+          const redirect = searchParams.get('redirect') || '/dashboard'
+          router.push(redirect)
+        }
+      } catch (err) {
+        console.error('Error checking user:', err)
       }
     }
     checkUser()

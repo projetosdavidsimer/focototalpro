@@ -1,4 +1,3 @@
-import { AppSidebar } from "@/components/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,31 +9,14 @@ import {
 import { Separator } from "@/components/ui/separator"
 import {
   SidebarInset,
-  SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { getCurrentUser } from "@/app/actions/auth"
-import { redirect } from "next/navigation"
 import { BarChart3, TrendingUp, Clock, Target } from "lucide-react"
 
 export default async function DashboardStatsPage() {
-  const user = await getCurrentUser()
-  
-  if (!user) {
-    redirect('/login')
-  }
-
-  const userData = {
-    name: user.full_name,
-    email: user.email,
-    avatar: user.avatar_url,
-  }
-
   return (
-    <SidebarProvider>
-      <AppSidebar user={userData} />
-      <SidebarInset>
+    <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -103,6 +85,5 @@ export default async function DashboardStatsPage() {
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
   )
 }
