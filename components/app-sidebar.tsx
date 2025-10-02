@@ -25,11 +25,19 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-const data = {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  user?: {
+    name: string
+    email: string
+    avatar: string
+  }
+}
+
+const defaultData = {
   user: {
     name: "Usuário",
     email: "usuario@focototal.com",
-    avatar: "/avatars/user.jpg",
+    avatar: "",
   },
   teams: [
     {
@@ -61,7 +69,7 @@ const data = {
       icon: Calendar,
       items: [
         {
-          title: "Ciclo de Estudos",
+          title: "Visão Geral",
           url: "/planner",
         },
         {
@@ -69,8 +77,12 @@ const data = {
           url: "/planner/subjects",
         },
         {
-          title: "Cronômetro",
-          url: "/planner/timer",
+          title: "Sessões de Estudo",
+          url: "/planner/sessions",
+        },
+        {
+          title: "Pomodoro",
+          url: "/planner/pomodoro",
         },
       ],
     },
@@ -80,8 +92,8 @@ const data = {
       icon: ClipboardList,
       items: [
         {
-          title: "Registrar Simulado",
-          url: "/simulados/new",
+          title: "Meus Simulados",
+          url: "/simulados",
         },
         {
           title: "Histórico",
@@ -151,18 +163,20 @@ const data = {
   ],
 }
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  const userData = user || defaultData.user
+  
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <TeamSwitcher teams={defaultData.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
+        <NavMain items={defaultData.navMain} />
+        <NavProjects projects={defaultData.projects} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={userData} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

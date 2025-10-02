@@ -36,22 +36,10 @@ export default function RegisterPage() {
       setError(signUpError.message)
       setLoading(false)
     } else if (data.user) {
-      // Create profile
-      const { error: profileError } = await supabase
-        .from("profiles")
-        .insert({
-          id: data.user.id,
-          email: data.user.email!,
-          full_name: fullName,
-        })
-
-      if (profileError) {
-        setError(profileError.message)
-        setLoading(false)
-      } else {
-        router.push("/dashboard")
-        router.refresh()
-      }
+      // O perfil é criado automaticamente pelo trigger handle_new_user
+      // Não precisamos criar manualmente
+      router.push("/dashboard")
+      router.refresh()
     }
   }
 

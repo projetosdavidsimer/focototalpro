@@ -3,11 +3,14 @@
 ## 🔴 Prioridade Crítica
 
 ### Infraestrutura & Segurança
-- [ ] Configurar projeto no Supabase (criar conta e projeto)
-- [ ] Criar schema do banco de dados (profiles, subjects, study_sessions, mock_exams)
+- [ ] Configurar projeto no Supabase (criar conta e projeto) - **PRÓXIMO PASSO**
+- [x] Criar schema do banco de dados (profiles, subjects, study_sessions, mock_exams)
+- [x] Criar guia de setup do Supabase (SETUP_GUIDE.md)
+- [ ] Aplicar schema SQL no Supabase
 - [ ] Configurar autenticação no Supabase (email/senha + Google OAuth)
-- [ ] Implementar Row Level Security (RLS) policies
+- [x] Implementar Row Level Security (RLS) policies (no schema)
 - [x] Configurar variáveis de ambiente (.env.local)
+- [ ] Atualizar .env.local com credenciais reais do Supabase
 - [ ] Adicionar secrets no GitHub e Vercel
 - [ ] Configurar proteção de branch main no GitHub
 
@@ -18,17 +21,21 @@
 - [x] Criar páginas de registro (/register)
 - [x] Implementar middleware de proteção de rotas
 - [x] Criar callback de autenticação (/auth/callback)
-- [ ] Criar fluxo de logout
+- [x] Criar fluxo de logout
+- [x] Buscar dados reais do usuário no dashboard
 - [ ] Implementar recuperação de senha
 
 ## 🟡 Prioridade Alta
 
 ### Dashboard Real
-- [ ] Criar componentes de métricas (horas estudadas, desempenho, próximos tópicos)
-- [ ] Implementar cards de estatísticas
-- [ ] Adicionar gráficos de progresso (recharts ou similar)
-- [ ] Conectar com dados reais do Supabase
-- [ ] Implementar loading states
+- [x] Criar componentes de métricas (horas estudadas, desempenho, próximos tópicos)
+- [x] Implementar cards de estatísticas
+- [x] Implementar queries Supabase para buscar dados
+- [x] Conectar com dados reais do Supabase
+- [x] Implementar loading states (Suspense + Skeleton)
+- [x] Criar componente de atividade recente
+- [x] Criar componente de próximos tópicos
+- [ ] Adicionar gráficos de evolução (recharts)
 
 ### Planejamento de Estudos
 - [ ] Criar página /planner
@@ -88,5 +95,7 @@
 
 ---
 
-**Última atualização**: 2025-01-XX
-**Status do Projeto**: Estrutura inicial implementada, aguardando integração com backend
+**Última atualização**: 2025-01-21
+**Status do Projeto**: Dashboard implementado (55%), aguardando setup do Supabase para testar
+**Build Status**: ✅ Compilando sem erros TypeScript
+**Próximo Passo**: Criar projeto no Supabase, aplicar schema.sql e testar dashboard

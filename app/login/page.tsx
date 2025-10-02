@@ -98,6 +98,11 @@ export default function LoginPage() {
                 disabled={loading}
               />
             </div>
+            <div className="text-right">
+              <Link href="/forgot-password" className="text-sm text-primary hover:underline">
+                Esqueceu a senha?
+              </Link>
+            </div>
 
             {error && (
               <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-lg">

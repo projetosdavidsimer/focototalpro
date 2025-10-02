@@ -14,11 +14,76 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { getCurrentUser } from "@/app/actions/auth"
+import { getDashboardStats, getRecentActivity, getUpcomingTopics } from "@/app/actions/dashboard"
+import { getWeeklyStudySummary } from "@/app/actions/study-sessions"
+import { redirect } from "next/navigation"
+import { DashboardStats } from "@/components/dashboard/dashboard-stats"
+import { RecentActivity } from "@/components/dashboard/recent-activity"
+import { UpcomingTopics } from "@/components/dashboard/upcoming-topics"
+import { WeeklyChart } from "@/components/dashboard/weekly-chart"
+import { Suspense } from "react"
+import { Skeleton } from "@/components/ui/skeleton"
 
-export default function Page() {
+function DashboardSkeleton() {
+  return (
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {[...Array(4)].map((_, i) => (
+          <Skeleton key={i} className="h-32 rounded-xl" />
+        ))}
+      </div>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Skeleton className="h-96 rounded-xl" />
+        <Skeleton className="h-96 rounded-xl" />
+      </div>
+    </div>
+  )
+}
+
+async function DashboardContent({ userId }: { userId: string }) {
+  const [stats, activity, topics, weeklyData] = await Promise.all([
+    getDashboardStats(userId),
+    getRecentActivity(userId),
+    getUpcomingTopics(userId),
+    getWeeklyStudySummary(userId),
+  ])
+
+  return (
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <DashboardStats
+        weeklyHours={stats.weeklyHours}
+        lastExamScore={stats.lastExamScore}
+        totalSubjects={stats.totalSubjects}
+        studyStreak={stats.studyStreak}
+      />
+      {weeklyData.data && weeklyData.data.length > 0 && (
+        <WeeklyChart data={weeklyData.data} />
+      )}
+      <div className="grid gap-4 md:grid-cols-2">
+        <RecentActivity sessions={activity.sessions} exams={activity.exams} />
+        <UpcomingTopics topics={topics} />
+      </div>
+    </div>
+  )
+}
+
+export default async function Page() {
+  const user = await getCurrentUser()
+  
+  if (!user) {
+    redirect('/login')
+  }
+
+  const userData = {
+    name: user.full_name,
+    email: user.email,
+    avatar: user.avatar_url,
+  }
+
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={userData} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -45,14 +110,9 @@ export default function Page() {
             <ThemeToggle />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-          </div>
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
-        </div>
+        <Suspense fallback={<DashboardSkeleton />}>
+          <DashboardContent userId={user.id} />
+        </Suspense>
       </SidebarInset>
     </SidebarProvider>
   )
