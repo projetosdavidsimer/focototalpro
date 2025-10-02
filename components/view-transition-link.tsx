@@ -38,10 +38,11 @@ export function ViewTransitionLink({
     if (
       typeof window !== 'undefined' &&
       'startViewTransition' in document &&
-      typeof (document as any).startViewTransition === 'function'
+      typeof (document as Document & { startViewTransition?: (callback: () => void) => void }).startViewTransition === 'function'
     ) {
       // Usar View Transitions API nativa
-      ;(document as any).startViewTransition(() => {
+      const doc = document as Document & { startViewTransition: (callback: () => void) => void }
+      doc.startViewTransition(() => {
         startTransition(() => {
           router.push(href)
         })
