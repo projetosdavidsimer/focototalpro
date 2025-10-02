@@ -7,7 +7,6 @@ import {
   Calendar,
   ClipboardList,
   BarChart3,
-  Settings,
   Crown,
   Target,
   Clock,
@@ -121,25 +120,6 @@ const defaultData = {
         {
           title: "Pontos Fracos",
           url: "/performance/weaknesses",
-        },
-      ],
-    },
-    {
-      title: "Configurações",
-      url: "/settings",
-      icon: Settings,
-      items: [
-        {
-          title: "Perfil",
-          url: "/settings/profile",
-        },
-        {
-          title: "Assinatura",
-          url: "/settings/subscription",
-        },
-        {
-          title: "Preferências",
-          url: "/settings/preferences",
         },
       ],
     },

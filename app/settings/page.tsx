@@ -1,13 +1,6 @@
-import { ComingSoon } from "@/components/coming-soon"
+import { redirect } from "next/navigation"
 
 export default function SettingsPage() {
-  return (
-    <ComingSoon
-      title="Perfil"
-      description="Gerencie suas informações pessoais e preferências de conta."
-      breadcrumbs={[
-        { label: "Configurações" },
-      ]}
-    />
-  )
+  // Redireciona para a página de perfil por padrão
+  redirect('/settings/profile')
 }
