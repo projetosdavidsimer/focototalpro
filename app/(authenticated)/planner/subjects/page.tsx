@@ -7,7 +7,7 @@ import { PageHeader } from "@/components/page-header"
 
 function SubjectsSkeleton() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
       <div className="flex items-center justify-between">
         <div>
           <Skeleton className="h-8 w-48 mb-2" />

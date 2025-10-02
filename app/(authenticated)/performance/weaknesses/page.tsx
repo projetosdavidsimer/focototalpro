@@ -10,7 +10,7 @@ export default async function PerformanceWeaknessesPage() {
           { label: "Pontos Fracos" },
         ]}
       />
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+      <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
         <div className="rounded-xl border bg-card p-6">
           <div className="flex items-center justify-between mb-6">
             <div>

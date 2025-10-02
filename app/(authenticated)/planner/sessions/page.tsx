@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/page-header"
 
 function SessionsSkeleton() {
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+    <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
       <Skeleton className="h-32 rounded-xl" />
       <div className="grid gap-4 md:grid-cols-7">
         {[...Array(7)].map((_, i) => (

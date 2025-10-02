@@ -6,7 +6,7 @@ export default function AuthenticatedTemplate({
   children: React.ReactNode
 }) {
   return (
-    <SidebarInset>
+    <SidebarInset className="pt-4">
       {children}
     </SidebarInset>
   )
