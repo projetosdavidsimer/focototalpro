@@ -7,7 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
-import { SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarTrigger, SidebarInset } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { getCurrentUser } from "@/app/actions/auth"
 import { getDashboardStats, getRecentActivity, getUpcomingTopics } from "@/app/actions/dashboard"
@@ -66,8 +66,8 @@ export default async function DashboardPage() {
   const user = await getCurrentUser()
 
   return (
-    <div className="flex flex-col flex-1">
-      <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+    <SidebarInset>
+      <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
@@ -90,6 +90,6 @@ export default async function DashboardPage() {
       <Suspense fallback={<DashboardSkeleton />}>
         <DashboardContent userId={user!.id} />
       </Suspense>
-    </div>
+    </SidebarInset>
   )
 }

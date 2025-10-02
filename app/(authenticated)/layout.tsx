@@ -23,9 +23,7 @@ export default async function AuthenticatedLayout({
   return (
     <SidebarProvider>
       <AppSidebar user={userData} />
-      <SidebarInset className="flex flex-col flex-1">
-        {children}
-      </SidebarInset>
+      {children}
     </SidebarProvider>
   )
 }
