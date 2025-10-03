@@ -12,6 +12,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { createSubject, updateSubject } from "@/app/actions/subjects"
+import { createTopic, getTopics, deleteTopic } from "@/app/actions/topics"
+import { TopicManager } from "./topic-manager"
 
 interface SubjectDialogProps {
   open: boolean
@@ -47,6 +49,7 @@ export function SubjectDialog({
   const [name, setName] = useState("")
   const [color, setColor] = useState("#3b82f6")
   const [targetHours, setTargetHours] = useState(5)
+  const [topics, setTopics] = useState<Array<{ id?: string; name: string; description?: string; mastery_level?: number }>>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -84,7 +87,7 @@ export function SubjectDialog({
           onOpenChange(false)
         }
       } else {
-        // Create
+        // Create subject
         const result = await createSubject(userId, {
           name,
           color,
@@ -93,7 +96,22 @@ export function SubjectDialog({
         
         if (result.error) {
           setError(result.error)
-        } else {
+        } else if (result.data) {
+          // Create topics if any
+          if (topics.length > 0) {
+            await Promise.all(
+              topics.map(topic =>
+                createTopic(userId, {
+                  subject_id: result.data.id,
+                  name: topic.name,
+                  description: topic.description,
+                  mastery_level: topic.mastery_level ?? 0,
+                })
+              )
+            )
+          }
+          
+          setTopics([])
           onSuccess()
           onOpenChange(false)
         }
@@ -172,6 +190,14 @@ export function SubjectDialog({
               Quantas horas você pretende estudar esta matéria por semana?
             </p>
           </div>
+
+          {!subject && (
+            <TopicManager
+              topics={topics}
+              onChange={setTopics}
+              disabled={loading}
+            />
+          )}
 
           {error && (
             <div className="bg-destructive/10 text-destructive text-sm p-3 rounded-lg">
