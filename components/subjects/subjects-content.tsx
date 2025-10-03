@@ -60,7 +60,7 @@ export function SubjectsContent({ userId, initialSubjects }: SubjectsContentProp
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
         {subjects.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
             <div className="rounded-full bg-muted p-6 mb-4">
               <BookOpen className="h-12 w-12 text-muted-foreground" />
             </div>
@@ -77,7 +77,14 @@ export function SubjectsContent({ userId, initialSubjects }: SubjectsContentProp
             </Button>
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <>
+            <div>
+              <h1 className="text-2xl font-bold">Minhas Matérias</h1>
+              <p className="text-muted-foreground">
+                Gerencie as matérias do seu planejamento de estudos
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {subjects.map((subject) => (
               <SubjectCard
                 key={subject.id}
@@ -94,6 +101,7 @@ export function SubjectsContent({ userId, initialSubjects }: SubjectsContentProp
               <span className="text-sm font-medium text-muted-foreground">Nova Matéria</span>
             </button>
           </div>
+          </>
         )}
       </div>
 

@@ -70,43 +70,8 @@ export function SimuladosContent({ userId, initialExams }: SimuladosContentProps
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
-        {totalExams > 0 && (
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border bg-card p-4">
-              <div className="text-sm text-muted-foreground mb-1">
-                Total de Simulados
-              </div>
-              <div className="text-3xl font-bold">{totalExams}</div>
-            </div>
-            <div className="rounded-xl border bg-card p-4">
-              <div className="text-sm text-muted-foreground mb-1">
-                Média Geral
-              </div>
-              <div className={`text-3xl font-bold ${
-                averageScore >= 70 ? 'text-green-600' : 'text-orange-600'
-              }`}>
-                {averageScore}%
-              </div>
-            </div>
-            <div className="rounded-xl border bg-card p-4">
-              <div className="text-sm text-muted-foreground mb-1">
-                Último Resultado
-              </div>
-              <div className={`text-3xl font-bold ${
-                exams[0] && (exams[0].correct_answers / exams[0].total_questions) * 100 >= 70
-                  ? 'text-green-600'
-                  : 'text-orange-600'
-              }`}>
-                {exams[0] 
-                  ? Math.round((exams[0].correct_answers / exams[0].total_questions) * 100)
-                  : 0}%
-              </div>
-            </div>
-          </div>
-        )}
-
-        {exams.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
+        {totalExams === 0 ? (
+          <div className="flex flex-1 flex-col items-center justify-center text-center">
             <div className="rounded-full bg-muted p-6 mb-4">
               <FileText className="h-12 w-12 text-muted-foreground" />
             </div>
@@ -123,7 +88,47 @@ export function SimuladosContent({ userId, initialExams }: SimuladosContentProps
             </Button>
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <>
+            <div>
+              <h1 className="text-2xl font-bold">Meus Simulados</h1>
+              <p className="text-muted-foreground">
+                Acompanhe seu desempenho nos simulados
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border bg-card p-4">
+                <div className="text-sm text-muted-foreground mb-1">
+                  Total de Simulados
+                </div>
+                <div className="text-3xl font-bold">{totalExams}</div>
+              </div>
+              <div className="rounded-xl border bg-card p-4">
+                <div className="text-sm text-muted-foreground mb-1">
+                  Média Geral
+                </div>
+                <div className={`text-3xl font-bold ${
+                  averageScore >= 70 ? 'text-green-600' : 'text-orange-600'
+                }`}>
+                  {averageScore}%
+                </div>
+              </div>
+              <div className="rounded-xl border bg-card p-4">
+                <div className="text-sm text-muted-foreground mb-1">
+                  Último Resultado
+                </div>
+                <div className={`text-3xl font-bold ${
+                  exams[0] && (exams[0].correct_answers / exams[0].total_questions) * 100 >= 70
+                    ? 'text-green-600'
+                    : 'text-orange-600'
+                }`}>
+                  {exams[0] 
+                    ? Math.round((exams[0].correct_answers / exams[0].total_questions) * 100)
+                    : 0}%
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {exams.map((exam) => (
               <ExamCard
                 key={exam.id}
@@ -140,6 +145,7 @@ export function SimuladosContent({ userId, initialExams }: SimuladosContentProps
               <span className="text-sm font-medium text-muted-foreground">Registrar Simulado</span>
             </button>
           </div>
+          </>
         )}
       </div>
 
