@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Clock, Trash2, Plus, NotebookPen, BookOpen, Check, ChevronDown, CalendarIcon } from "lucide-react"
+import { Clock, Trash2, Plus, NotebookPen, BookOpen, Check, ChevronDown, CalendarIcon, FileText } from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,6 +26,7 @@ import {
   getWeeklyStudySummary,
   type StudySessionInput,
 } from "@/app/actions/study-sessions"
+import { getTopics } from "@/app/actions/topics"
 
 interface Subject {
   id: string
@@ -60,6 +61,8 @@ export function SessionsContent({
   const [loadingCreate, setLoadingCreate] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [datePickerOpen, setDatePickerOpen] = useState(false)
+  const [topics, setTopics] = useState<Array<{ id: string; name: string }>>([])
+  const [topicId, setTopicId] = useState<string | null>(null)
 
   const todayStr = useMemo(() => {
     const d = new Date()
@@ -72,6 +75,20 @@ export function SessionsContent({
     date: todayStr,
     notes: "",
   })
+
+  // Buscar assuntos quando matéria for selecionada
+  useEffect(() => {
+    if (form.subject_id) {
+      getTopics(userId, form.subject_id).then((result) => {
+        if (result.data) {
+          setTopics(result.data)
+        }
+      })
+    } else {
+      setTopics([])
+      setTopicId(null)
+    }
+  }, [form.subject_id, userId])
 
   const onCreate = async (e: React.FormEvent) => {
     e.preventDefault()
