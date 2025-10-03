@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 
 export type StudySessionInput = {
   subject_id?: string | null
+  topic_id?: string | null
   duration_minutes: number
   date: string // ISO date (YYYY-MM-DD)
   notes?: string
@@ -71,6 +72,7 @@ export async function createStudySession(userId: string, session: StudySessionIn
   const payload = {
     user_id: userId,
     subject_id: session.subject_id ?? null,
+    topic_id: session.topic_id ?? null,
     duration_minutes: session.duration_minutes,
     date: session.date,
     notes: session.notes ?? null,

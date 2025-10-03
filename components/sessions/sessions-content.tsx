@@ -105,6 +105,7 @@ export function SessionsContent({
 
       const payload: StudySessionInput = {
         subject_id: form.subject_id || null,
+        topic_id: topicId || null,
         duration_minutes: minutes,
         date: form.date,
         notes: form.notes?.trim() ? form.notes.trim() : undefined,
@@ -115,6 +116,7 @@ export function SessionsContent({
         setError(result.error)
       } else {
         setForm({ subject_id: null, duration_minutes: 25, date: todayStr, notes: "" })
+        setTopicId(null)
         
         const [updatedSessions, updatedWeekly] = await Promise.all([
           getStudySessions(userId, { limit: 20 }),
@@ -208,6 +210,64 @@ export function SessionsContent({
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
+
+          {form.subject_id && topics.length > 0 && (
+            <div className="space-y-2 md:col-span-1">
+              <label className="text-sm font-medium">Assunto (opcional)</label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full justify-between"
+                    disabled={loadingCreate}
+                  >
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      <span>
+                        {topicId
+                          ? topics.find((t) => t.id === topicId)?.name
+                          : "Sem assunto"}
+                      </span>
+                    </div>
+                    <ChevronDown className="h-4 w-4 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-[200px]" align="start">
+                  <DropdownMenuLabel className="text-xs text-muted-foreground">
+                    Selecione um assunto
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={() => setTopicId(null)}
+                    className="gap-2"
+                  >
+                    <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
+                      <FileText className="size-4" />
+                    </div>
+                    <span>Sem assunto</span>
+                    {!topicId && <Check className="ml-auto h-4 w-4" />}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  {topics.map((topic) => (
+                    <DropdownMenuItem
+                      key={topic.id}
+                      onClick={() => setTopicId(topic.id)}
+                      className="gap-2"
+                    >
+                      <div className="flex size-6 items-center justify-center rounded-md border bg-muted">
+                        <FileText className="size-4" />
+                      </div>
+                      <span>{topic.name}</span>
+                      {topicId === topic.id && (
+                        <Check className="ml-auto h-4 w-4" />
+                      )}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
 
           <div className="space-y-2">
             <label className="text-sm font-medium">Data</label>
