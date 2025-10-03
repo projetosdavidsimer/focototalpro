@@ -198,7 +198,7 @@ export function PomodoroTimer({ userId, subjects }: PomodoroTimerProps) {
   }
 
   return (
-    <div className="flex flex-1 flex-col items-center justify-center p-8 overflow-hidden">
+    <div className="flex flex-1 flex-col items-center justify-center p-8 pt-6 overflow-hidden relative">
       {showSettings && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="bg-card border rounded-lg shadow-lg w-full max-w-md p-6">
