@@ -59,19 +59,6 @@ export function SubjectsContent({ userId, initialSubjects }: SubjectsContentProp
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Minhas Matérias</h1>
-            <p className="text-muted-foreground">
-              Gerencie as matérias do seu planejamento de estudos
-            </p>
-          </div>
-          <Button onClick={() => setDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nova Matéria
-          </Button>
-        </div>
-
         {subjects.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="rounded-full bg-muted p-6 mb-4">
@@ -99,6 +86,13 @@ export function SubjectsContent({ userId, initialSubjects }: SubjectsContentProp
                 onDelete={() => handleDelete(subject.id)}
               />
             ))}
+            <button
+              onClick={() => setDialogOpen(true)}
+              className="rounded-xl border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 hover:bg-muted/50 transition-colors p-6 flex flex-col items-center justify-center gap-2 min-h-[200px]"
+            >
+              <Plus className="h-8 w-8 text-muted-foreground" />
+              <span className="text-sm font-medium text-muted-foreground">Nova Matéria</span>
+            </button>
           </div>
         )}
       </div>

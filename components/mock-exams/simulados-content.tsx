@@ -70,19 +70,6 @@ export function SimuladosContent({ userId, initialExams }: SimuladosContentProps
   return (
     <>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold">Meus Simulados</h1>
-            <p className="text-muted-foreground">
-              Acompanhe seu desempenho nos simulados
-            </p>
-          </div>
-          <Button onClick={() => setDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Registrar Simulado
-          </Button>
-        </div>
-
         {totalExams > 0 && (
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border bg-card p-4">
@@ -145,6 +132,13 @@ export function SimuladosContent({ userId, initialExams }: SimuladosContentProps
                 onDelete={() => handleDelete(exam.id)}
               />
             ))}
+            <button
+              onClick={() => setDialogOpen(true)}
+              className="rounded-xl border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 hover:bg-muted/50 transition-colors p-6 flex flex-col items-center justify-center gap-2 min-h-[200px]"
+            >
+              <Plus className="h-8 w-8 text-muted-foreground" />
+              <span className="text-sm font-medium text-muted-foreground">Registrar Simulado</span>
+            </button>
           </div>
         )}
       </div>
